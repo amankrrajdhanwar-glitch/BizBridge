@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BizBridge Tools - Free Online Tools</title>
+  <meta name="description" content="BizBridge provides simple and useful free online tools.">
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 18px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    header span {
+      color: #60a5fa;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 18px;
+      font-size: 14px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 70px 20px;
+      background: white;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      margin-bottom: 15px;
+    }
+
+    .hero h1 span {
+      color: #2563eb;
+    }
+
+    .hero p {
+      max-width: 650px;
+      margin: auto;
+      color: #5b6475;
+      font-size: 18px;
+    }
+
+    .tools {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 28px;
+    }
+
+    .tool-card {
+      background: white;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.07);
+      margin-bottom: 25px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 180px;
+      padding: 15px;
+      border: 1px solid #d5d9e2;
+      border-radius: 10px;
+      resize: vertical;
+      font-size: 16px;
+      outline: none;
+    }
+
+    textarea:focus {
+      border-color: #2563eb;
+    }
+
+    .stats {
+      display: flex;
+      gap: 12px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      background: #eef4ff;
+      padding: 12px 18px;
+      border-radius: 10px;
+      flex: 1;
+      min-width: 100px;
+      text-align: center;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 23px;
+      color: #2563eb;
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .small-card {
+      background: white;
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+    }
+
+    .small-card h3 {
+      margin-bottom: 8px;
+    }
+
+    .small-card p {
+      color: #687386;
+      font-size: 14px;
+    }
+
+    .coming {
+      color: #2563eb;
+      font-size: 13px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    footer {
+      margin-top: 60px;
+      background: #111827;
+      color: #cbd5e1;
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    @media (max-width: 700px) {
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .tool-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">Biz<span>Bridge</span></div>
+  <nav>
+    <a href="#tools">Tools</a>
+    <a href="#about">About</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Useful Tools. <span>One Place.</span></h1>
+  <p>
+    BizBridge provides simple, fast and free online tools designed to make everyday tasks easier.
+  </p>
+</section>
+
+<section class="tools" id="tools">
+
+  <h2 class="section-title">Free Online Tools</h2>
+
+  <div class="tool-card">
+    <h2>📝 Word Counter</h2>
+    <p>Type or paste your text below.</p>
+
+    <br>
+
+    <textarea id="textInput" placeholder="Start typing here..."></textarea>
+
+    <div class="stats">
+      <div class="stat">
+        <strong id="wordCount">0</strong>
+        Words
+      </div>
+
+      <div class="stat">
+        <strong id="charCount">0</strong>
+        Characters
+      </div>
+
+      <div class="stat">
+        <strong id="sentenceCount">0</strong>
+        Sentences
+      </div>
+    </div>
+  </div>
+
+  <div class="tool-grid">
+
+    <div class="small-card">
+      <h3>🔤 Case Converter</h3>
+      <p>Convert text to uppercase, lowercase and more.</p>
+      <div class="coming">Coming soon</div>
+    </div>
+
+    <div class="small-card">
+      <h3>🔢 Percentage Calculator</h3>
+      <p>Quickly calculate percentages.</p>
+      <div class="coming">Coming soon</div>
+    </div>
+
+    <div class="small-card">
+      <h3>📏 Unit Converter</h3>
+      <p>Convert common units easily.</p>
+      <div class="coming">Coming soon</div>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="tools" id="about">
+  <div class="tool-card">
+    <h2>About BizBridge</h2>
+    <p>
+      BizBridge is building a collection of simple and useful online tools.
+      Our goal is to make everyday digital tasks faster and easier.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 BizBridge. All rights reserved.</p>
+  <p>Useful tools. Simple experience.</p>
+</footer>
+
+<script>
+  const textInput = document.getElementById("textInput");
+  const wordCount = document.getElementById("wordCount");
+  const charCount = document.getElementById("charCount");
+  const sentenceCount = document.getElementById("sentenceCount");
+
+  textInput.addEventListener("input", function() {
+
+    const text = textInput.value;
+
+    const words = text.trim()
+      ? text.trim().split(/\s+/).length
+      : 0;
+
+    const characters = text.length;
+
+    const sentences = text.trim()
+      ? text.split(/[.!?]+/)
+          .filter(sentence => sentence.trim().length > 0)
+          .length
+      : 0;
+
+    wordCount.textContent = words;
+    charCount.textContent = characters;
+    sentenceCount.textContent = sentences;
+  });
+</script>
+
+</body>
+</html>
