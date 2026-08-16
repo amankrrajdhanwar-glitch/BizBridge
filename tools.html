@@ -57,7 +57,36 @@
       margin-top: 10px;
       white-space: pre-wrap;
       word-break: break-word;
-    }
+    }.tool {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tool:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+.tool h2 {
+  color: #2563eb;
+}
+
+button {
+  transition: 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+@media (min-width: 700px) {
+  body {
+    padding: 30px;
+  }
+
+  .tool {
+    max-width: 850px;
+  }
+}
   </style>
 </head>
 
