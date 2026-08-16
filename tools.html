@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BizBridge Tools</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      margin: 0;
+      padding: 20px;
+      color: #222;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2563eb;
+    }
+
+    .tool {
+      background: white;
+      max-width: 700px;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    }
+
+    textarea, input, select, button {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    .result {
+      background: #eef2ff;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 10px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>🚀 BizBridge Tools</h1>
+
+<!-- 1. Text Cleaner -->
+<div class="tool">
+  <h2>📝 Text Cleaner</h2>
+  <textarea id="textInput" rows="6" placeholder="Enter your text..."></textarea>
+  <button onclick="cleanText()">Clean Text</button>
+  <div id="textResult" class="result"></div>
+</div>
+
+<!-- 2. Age Calculator -->
+<div class="tool">
+  <h2>📅 Age Calculator</h2>
+  <input type="date" id="dob">
+  <button onclick="calculateAge()">Calculate Age</button>
+  <div id="ageResult" class="result"></div>
+</div>
+
+<!-- 3. Date Difference -->
+<div class="tool">
+  <h2>📆 Date Difference</h2>
+  <label>Start Date</label>
+  <input type="date" id="startDate">
+
+  <label>End Date</label>
+  <input type="date" id="endDate">
+
+  <button onclick="dateDifference()">Calculate Difference</button>
+  <div id="dateResult" class="result"></div>
+</div>
+
+<!-- 4. Unit Converter -->
+<div class="tool">
+  <h2>📏 Unit Converter</h2>
+
+  <input type="number" id="unitValue" placeholder="Enter value">
+
+  <select id="unitType">
+    <option value="km_miles">Kilometers → Miles</option>
+    <option value="miles_km">Miles → Kilometers</option>
+    <option value="kg_lb">Kilograms → Pounds</option>
+    <option value="lb_kg">Pounds → Kilograms</option>
+    <option value="c_f">Celsius → Fahrenheit</option>
+    <option value="f_c">Fahrenheit → Celsius</option>
+  </select>
+
+  <button onclick="convertUnit()">Convert</button>
+  <div id="unitResult" class="result"></div>
+</div>
+
+<!-- 5. Number Base Converter -->
+<div class="tool">
+  <h2>🔢 Number Base Converter</h2>
+
+  <input type="text" id="numberInput" placeholder="Enter number">
+
+  <select id="numberBase">
+    <option value="10">Decimal</option>
+    <option value="2">Binary</option>
+    <option value="16">Hexadecimal</option>
+  </select>
+
+  <button onclick="convertNumber()">Convert</button>
+  <div id="numberResult" class="result"></div>
+</div>
+
+<!-- 6. JSON Formatter -->
+<div class="tool">
+  <h2>{} JSON Formatter</h2>
+
+  <textarea id="jsonInput" rows="7"
+    placeholder='Example: {"name":"Aman","age":16}'></textarea>
+
+  <button onclick="formatJSON()">Format JSON</button>
+  <div id="jsonResult" class="result"></div>
+</div>
+
+<!-- 7. URL Encoder / Decoder -->
+<div class="tool">
+  <h2>🔗 URL Encoder / Decoder</h2>
+
+  <textarea id="urlInput" rows="4"
+    placeholder="Enter URL or text..."></textarea>
+
+  <button onclick="encodeURL()">Encode</button>
+  <button onclick="decodeURL()">Decode</button>
+
+  <div id="urlResult" class="result"></div>
+</div>
+
+<!-- 8. Random Number Generator -->
+<div class="tool">
+  <h2>🎲 Random Number Generator</h2>
+
+  <input type="number" id="minNumber" placeholder="Minimum">
+  <input type="number" id="maxNumber" placeholder="Maximum">
+
+  <button onclick="randomNumber()">Generate</button>
+
+  <div id="randomResult" class="result"></div>
+</div>
+
+
+<script>
+
+  // 1. Text Cleaner
+  function cleanText() {
+    const text = document.getElementById("textInput").value;
+
+    const cleaned = text
+      .replace(/[ \t]+/g, " ")
+      .replace(/\n\s*\n+/g, "\n")
+      .trim();
+
+    document.getElementById("textResult").textContent = cleaned;
+  }
+
+
+  // 2. Age Calculator
+  function calculateAge() {
+    const dobValue = document.getElementById("dob").value;
+
+    if (!dobValue) {
+      document.getElementById("ageResult").textContent =
+        "Please select your date of birth.";
+      return;
+    }
+
+    const dob = new Date(dobValue);
+    const today = new Date();
+
+    let age = today.getFullYear() - dob.getFullYear();
+
+    const monthDifference = today.getMonth() - dob.getMonth();
+
+    if (
+      monthDifference < 0 ||
+      (monthDifference === 0 && today.getDate() < dob.getDate())
+    ) {
+      age--;
+    }
+
+    document.getElementById("ageResult").textContent =
+      "Your age is " + age + " years.";
+  }
+
+
+  // 3. Date Difference
+  function dateDifference() {
+    const start = new Date(document.getElementById("startDate").value);
+    const end = new Date(document.getElementById("endDate").value);
+
+    if (isNaN(start) || isNaN(end)) {
+      document.getElementById("dateResult").textContent =
+        "Please select both dates.";
+      return;
+    }
+
+    const difference = Math.abs(end - start);
+    const days = Math.round(difference / (1000 * 60 * 60 * 24));
+
+    document.getElementById("dateResult").textContent =
+      days + " days";
+  }
+
+
+  // 4. Unit Converter
+  function convertUnit() {
+    const value = parseFloat(document.getElementById("unitValue").value);
+    const type = document.getElementById("unitType").value;
+
+    if (isNaN(value)) {
+      document.getElementById("unitResult").textContent =
+        "Please enter a number.";
+      return;
+    }
+
+    let result;
+
+    if (type === "km_miles") {
+      result = value * 0.621371 + " miles";
+    }
+
+    else if (type === "miles_km") {
+      result = value * 1.60934 + " km";
+    }
+
+    else if (type === "kg_lb") {
+      result = value * 2.20462 + " pounds";
+    }
+
+    else if (type === "lb_kg") {
+      result = value * 0.453592 + " kg";
+    }
+
+    else if (type === "c_f") {
+      result = (value * 9/5) + 32 + " °F";
+    }
+
+    else if (type === "f_c") {
+      result = (value - 32) * 5/9 + " °C";
+    }
+
+    document.getElementById("unitResult").textContent = result;
+  }
+
+
+  // 5. Number Base Converter
+  function convertNumber() {
+    const value = document.getElementById("numberInput").value.trim();
+    const base = parseInt(document.getElementById("numberBase").value);
+
+    if (!value) {
+      document.getElementById("numberResult").textContent =
+        "Please enter a number.";
+      return;
+    }
+
+    const decimal = parseInt(value, base);
+
+    if (isNaN(decimal)) {
+      document.getElementById("numberResult").textContent =
+        "Invalid number for selected base.";
+      return;
+    }
+
+    document.getElementById("numberResult").textContent =
+      "Decimal: " + decimal +
+      "\nBinary: " + decimal.toString(2) +
+      "\nHexadecimal: " + decimal.toString(16).toUpperCase();
+  }
+
+
+  // 6. JSON Formatter
+  function formatJSON() {
+    const input = document.getElementById("jsonInput").value;
+
+    try {
+      const parsed = JSON.parse(input);
+
+      document.getElementById("jsonResult").textContent =
+        JSON.stringify(parsed, null, 2);
+    }
+
+    catch (error) {
+      document.getElementById("jsonResult").textContent =
+        "Invalid JSON.";
+    }
+  }
+
+
+  // 7. URL Encoder
+  function encodeURL() {
+    const input = document.getElementById("urlInput").value;
+
+    document.getElementById("urlResult").textContent =
+      encodeURIComponent(input);
+  }
+
+
+  // URL Decoder
+  function decodeURL() {
+    const input = document.getElementById("urlInput").value;
+
+    try {
+      document.getElementById("urlResult").textContent =
+        decodeURIComponent(input);
+    }
+
+    catch (error) {
+      document.getElementById("urlResult").textContent =
+        "Invalid encoded URL/text.";
+    }
+  }
+
+
+  // 8. Random Number Generator
+  function randomNumber() {
+    const min = parseInt(document.getElementById("minNumber").value);
+    const max = parseInt(document.getElementById("maxNumber").value);
+
+    if (isNaN(min) || isNaN(max) || min > max) {
+      document.getElementById("randomResult").textContent =
+        "Please enter a valid range.";
+      return;
+    }
+
+    const random =
+      Math.floor(Math.random() * (max - min + 1)) + min;
+
+    document.getElementById("randomResult").textContent =
+      "Random Number: " + random;
+  }
+
+</script>
+
+</body>
+</html>
