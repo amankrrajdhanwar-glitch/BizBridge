@@ -324,8 +324,14 @@
 
     <div class="small-card">
       <h3>🔢 Percentage Calculator</h3>
-      <p>Quickly calculate percentages.</p>
-      <div class="coming">Coming soon</div>
+<p>Calculate a percentage quickly.</p>
+
+<input type="number" id="percentValue" placeholder="Enter percentage">
+<input type="number" id="percentTotal" placeholder="Enter total value">
+
+<button onclick="calculatePercentage()">Calculate</button>
+
+<p id="percentageResult"></p>
     </div>
 
     <div class="small-card">
@@ -380,7 +386,15 @@ function capitalizeText() {
   input.value = input.value
     .toLowerCase()
     .replace(/\b\w/g, letter => letter.toUpperCase());
-}
+} 
+  function calculatePercentage() {
+  const percentage = Number(document.getElementById("percentValue").value);
+  const total = Number(document.getElementById("percentTotal").value);
+  const result = document.getElementById("percentageResult");
+
+  const answer = (percentage / 100) * total;
+  result.textContent = `${percentage}% of ${total} = ${answer}`;
+  }
   const textInput = document.getElementById("textInput");
   const wordCount = document.getElementById("wordCount");
   const charCount = document.getElementById("charCount");
