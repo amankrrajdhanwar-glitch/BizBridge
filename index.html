@@ -331,14 +331,32 @@
 
 <button onclick="calculatePercentage()">Calculate</button>
 
-<p id="percentageResult"></p>
-    </div>
+<p id="percentageResult"></p>         
+   <div class="small-card">
+  <h3>📏 Unit Converter</h3>
+  <p>Convert length units easily.</p>
 
-    <div class="small-card">
-      <h3>📏 Unit Converter</h3>
-      <p>Convert common units easily.</p>
-      <div class="coming">Coming soon</div>
-    </div>
+  <input type="number" id="unitValue" placeholder="Enter value">
+
+  <select id="fromUnit">
+    <option value="km">Kilometer (km)</option>
+    <option value="m">Meter (m)</option>
+    <option value="cm">Centimeter (cm)</option>
+    <option value="mm">Millimeter (mm)</option>
+  </select>
+
+  <select id="toUnit">
+    <option value="km">Kilometer (km)</option>
+    <option value="m">Meter (m)</option>
+    <option value="cm">Centimeter (cm)</option>
+    <option value="mm">Millimeter (mm)</option>
+  </select>
+
+  <button onclick="convertLength()">Convert</button>
+
+  <p id="unitResult"></p>
+   </div>
+      
 
   </div>
 
@@ -419,7 +437,24 @@ function capitalizeText() {
     wordCount.textContent = words;
     charCount.textContent = characters;
     sentenceCount.textContent = sentences;
-  });
+  }); 
+  function convertLength() {
+  const value = Number(document.getElementById("unitValue").value);
+  const from = document.getElementById("fromUnit").value;
+  const to = document.getElementById("toUnit").value;
+  const result = document.getElementById("unitResult");
+
+  const units = {
+    km: 1000,
+    m: 1,
+    cm: 0.01,
+    mm: 0.001
+  };
+
+  const answer = value * units[from] / units[to];
+
+  result.textContent = `${value} ${from} = ${answer} ${to}`;
+  }
 </script>
 <a href="tools.html">🛠️ BizBridge Tools</a>
 </body>
