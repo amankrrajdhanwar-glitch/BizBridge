@@ -364,6 +364,23 @@
 </footer>
 
 <script>
+  function toUpperCaseText() {
+  const input = document.getElementById("caseInput");
+  input.value = input.value.toUpperCase();
+}
+
+function toLowerCaseText() {
+  const input = document.getElementById("caseInput");
+  input.value = input.value.toLowerCase();
+}
+
+function capitalizeText() {
+  const input = document.getElementById("caseInput");
+
+  input.value = input.value
+    .toLowerCase()
+    .replace(/\b\w/g, letter => letter.toUpperCase());
+}
   const textInput = document.getElementById("textInput");
   const wordCount = document.getElementById("wordCount");
   const charCount = document.getElementById("charCount");
