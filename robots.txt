@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://amankrrajdhanwar-glitch.github.io/BizBridge/sitemap.xml
