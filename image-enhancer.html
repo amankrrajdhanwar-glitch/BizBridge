@@ -725,18 +725,52 @@ fileInput.addEventListener("change", function(event) {
 
   const files = Array.from(event.target.files);
 
-if (files.length > 1) {
-  alert(files.length + " photos selected.");
-}
+  const multiplePreview =
+    document.getElementById("multiplePreview");
 
-const file = files[0];
+  multiplePreview.innerHTML = "";
 
-if (file) {
-  alert("Photo selected: " + file.name);
-  loadSelectedFile(file);
-}
+  if (files.length > 1) {
+    alert(files.length + " photos selected.");
+  }
+
+  files.forEach(function(file) {
+
+    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+      return;
+    }
+
+    const img = document.createElement("img");
+
+    img.src = URL.createObjectURL(file);
+    img.alt = file.name;
+
+    multiplePreview.appendChild(img);
+
+  });
+
+  const file = files[0];
+
+  if (file) {
+    loadSelectedFile(file);
+  }
 
 });
+
+  
+
+
+  
+
+
+
+
+
+  
+  
+
+
+
 
   
     
