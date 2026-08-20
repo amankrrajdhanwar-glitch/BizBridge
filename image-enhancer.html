@@ -313,6 +313,20 @@ button {
 .comparison-info {
   text-align: center;
 }
+      .multiple-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  margin: 15px 0;
+}
+
+.multiple-preview img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #eee;
+}
       }
 </style>
       
@@ -541,8 +555,23 @@ button {
   <div class="card hidden" id="previewCard">
 
     <h2>👀 Before & After</h2>
+    <div id="multiplePreview" class="multiple-preview"></div>
 
     <div class="preview-grid">
+      
+  
+  
+  
+  
+
+
+
+  
+  
+  
+  
+  
+
 
       <div class="preview-box comparison-box">
 
