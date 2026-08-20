@@ -263,17 +263,45 @@
 
   <section class="tool-card">
 
-    <label for="fileInput" class="upload-box">
-      <h2>Upload Your Image</h2>
-      <p>Choose a JPG, PNG or WebP image</p>
-      <span class="upload-btn">Choose Image</span>
-    </label>
+   <div class="upload-box" id="uploadBox">
 
-    <input
-      type="file"
-      id="fileInput"
-      accept="image/jpeg,image/png,image/webp"
-    >
+  <div style="font-size:45px;">🖼️</div>
+
+  <h2>Upload Your Images</h2>
+
+  <p>
+    Drag & drop images here or choose files from your device
+  </p>
+
+  <button type="button" class="upload-btn" id="chooseBtn">
+    Choose Images
+  </button>
+
+  <input
+    type="file"
+    id="fileInput"
+    accept="image/jpeg,image/png,image/webp"
+    multiple
+    hidden
+  >
+
+  <p style="margin-top:15px;font-size:14px;">
+    JPG • PNG • WebP
+  </p>
+
+</div>
+
+<div id="fileList"></div> 
+      
+      
+      
+    
+
+    
+      
+      
+      
+    
 
     <div class="controls">
 
