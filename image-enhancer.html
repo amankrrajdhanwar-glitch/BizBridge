@@ -694,14 +694,27 @@ comparisonSlider.addEventListener("input", function () {
   // File selection
 fileInput.addEventListener("change", function(event) {
 
-  const file = event.target.files[0];
+  const files = Array.from(event.target.files);
 
-  if (file) {
-    alert("Photo selected: " + file.name);
-    loadSelectedFile(file);
-  }
+if (files.length > 1) {
+  alert(files.length + " photos selected.");
+}
+
+const file = files[0];
+
+if (file) {
+  alert("Photo selected: " + file.name);
+  loadSelectedFile(file);
+}
 
 });
+
+  
+    
+    
+  
+
+
 
 
   
