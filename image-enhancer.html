@@ -245,13 +245,98 @@ button {
       header h1 {
         font-size: 24px;
       }
+.comparison-box {
+  width: 100%;
+}
 
-      .upload-box {
-        padding: 35px 15px;
-      }
-    }
-  </style>
-</head>
+.comparison-container {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  margin: 15px auto;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #111;
+  aspect-ratio: 4 / 3;
+}
+
+.comparison-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.after-layer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 50%;
+  overflow: hidden;
+}
+
+.after-layer .comparison-image {
+  width: 100%;
+  max-width: none;
+}
+
+.comparison-slider {
+  position: absolute;
+  left: 0;
+  bottom: 12px;
+  width: 100%;
+  z-index: 10;
+  cursor: ew-resize;
+}
+
+.comparison-label {
+  position: absolute;
+  top: 12px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.65);
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  z-index: 5;
+}
+
+.before-label {
+  left: 12px;
+}
+
+.after-label {
+  right: 12px;
+}
+
+.comparison-info {
+  text-align: center;
+}
+      
+        
+        
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+      
+    
+  
+
 
 <body>
 
@@ -456,17 +541,49 @@ button {
 
     <div class="preview-grid">
 
-      <div class="preview-box">
-        <h3>Original</h3>
-        <img id="originalPreview" alt="Original image">
-        <p id="originalInfo"></p>
-      </div>
+      <div class="preview-box comparison-box">
 
-      <div class="preview-box">
-        <h3>Enhanced</h3>
-        <img id="enhancedPreview" alt="Enhanced image">
-        <p id="enhancedInfo"></p>
+  <h3>Before / After</h3>
+
+  <div class="comparison-container">
+
+    <img id="originalPreview" class="comparison-image" alt="Original image">
+
+    <div class="after-layer">
+      <img id="enhancedPreview" class="comparison-image" alt="Enhanced image">
+    </div>
+
+    <input
+      type="range"
+      id="comparisonSlider"
+      class="comparison-slider"
+      min="0"
+      max="100"
+      value="50"
+      aria-label="Before and after comparison"
+    >
+
+    <div class="comparison-label before-label">Original</div>
+    <div class="comparison-label after-label">Enhanced</div>
+
+  </div>
+
+  <div class="comparison-info">
+    <p id="originalInfo"></p>
+    <p id="enhancedInfo"></p>
+  </div>
+
       </div>
+        
+        
+        
+      
+
+      
+        
+        
+        
+      
 
     </div>
 
@@ -522,6 +639,12 @@ button {
 
   const originalPreview = document.getElementById("originalPreview");
   const enhancedPreview = document.getElementById("enhancedPreview");
+      const comparisonSlider = document.getElementById("comparisonSlider");
+const afterLayer = document.querySelector(".after-layer");
+
+comparisonSlider.addEventListener("input", function () {
+  afterLayer.style.width = this.value + "%";
+});
 
   const originalInfo = document.getElementById("originalInfo");
   const enhancedInfo = document.getElementById("enhancedInfo");
@@ -956,6 +1079,8 @@ fileInput.addEventListener("change", function(event) {
 
   // Reset
   resetBtn.addEventListener("click", function() {
+    comparisonSlider.value = 50;
+afterLayer.style.width = "50%";
 
     selectedFile = null;
     originalImage = null;
