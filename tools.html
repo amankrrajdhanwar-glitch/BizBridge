@@ -186,23 +186,23 @@ button:hover {
   <div id="unitResult" class="result"></div>
 </div>
 
-<!-- 5. Number Base Converter -->
-<div class="tool">
-  <h2>🔢 Number Base Converter</h2>
-<p class="tool-description">
-  Convert numbers between different number systems quickly and easily. This free online Number Base Converter supports Decimal, Binary, and Hexadecimal formats.
-</p>
-  <input type="text" id="numberInput" placeholder="Enter number">
 
-  <select id="numberBase">
-    <option value="10">Decimal</option>
-    <option value="2">Binary</option>
-    <option value="16">Hexadecimal</option>
-  </select>
 
-  <button onclick="convertNumber()">Convert</button>
-  <div id="numberResult" class="result"></div>
-</div>
+  
+
+  
+
+  
+
+  
+    
+  
+    
+  
+
+  
+  
+
 
 <!-- 6. JSON Formatter -->
 <div class="tool">
@@ -361,30 +361,27 @@ button:hover {
   }
 
 
-  // 5. Number Base Converter
-  function convertNumber() {
-    const value = document.getElementById("numberInput").value.trim();
-    const base = parseInt(document.getElementById("numberBase").value);
+  
+    
 
-    if (!value) {
-      document.getElementById("numberResult").textContent =
-        "Please enter a number.";
-      return;
-    }
+    
+  
+      
+    
 
-    const decimal = parseInt(value, base);
+    
 
-    if (isNaN(decimal)) {
-      document.getElementById("numberResult").textContent =
-        "Invalid number for selected base.";
-      return;
-    }
+    
+      
+        
+      
 
-    document.getElementById("numberResult").textContent =
-      "Decimal: " + decimal +
-      "\nBinary: " + decimal.toString(2) +
-      "\nHexadecimal: " + decimal.toString(16).toUpperCase();
-  }
+
+    
+    
+  
+    
+  
 
 
   // 6. JSON Formatter
