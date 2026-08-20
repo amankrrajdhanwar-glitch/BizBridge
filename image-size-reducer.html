@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Image Size Reducer - Compress Images Online | BizBridge</title>
+
+  <meta name="description" content="Reduce image file size online with BizBridge. Compress JPG, PNG and WebP images, adjust quality and download smaller images quickly.">
+
+  <meta name="keywords" content="image size reducer, image compressor, compress image, reduce image size, JPG compressor, PNG compressor, WebP compressor">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f5f7fb;
+      color: #1f2937;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #ffffff;
+      padding: 18px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #374151;
+      margin-left: 20px;
+      font-weight: 600;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 900px;
+      margin: 45px auto;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .hero h1 {
+      font-size: 38px;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      color: #6b7280;
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    .tool-card {
+      background: white;
+      border-radius: 18px;
+      padding: 30px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    .upload-box {
+      border: 2px dashed #2563eb;
+      border-radius: 14px;
+      padding: 45px 20px;
+      text-align: center;
+      cursor: pointer;
+      background: #f8fbff;
+      transition: 0.2s;
+    }
+
+    .upload-box:hover {
+      background: #eef5ff;
+    }
+
+    .upload-box h2 {
+      margin-bottom: 10px;
+      font-size: 22px;
+    }
+
+    .upload-box p {
+      color: #6b7280;
+      margin-bottom: 18px;
+    }
+
+    .upload-btn {
+      display: inline-block;
+      background: #2563eb;
+      color: white;
+      padding: 12px 22px;
+      border-radius: 9px;
+      font-weight: bold;
+    }
+
+    #fileInput {
+      display: none;
+    }
+
+    .controls {
+      display: none;
+      margin-top: 25px;
+    }
+
+    .control-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+    }
+
+    .range-value {
+      margin-top: 6px;
+      color: #2563eb;
+      font-weight: bold;
+    }
+
+    .preview {
+      display: none;
+      margin-top: 25px;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .preview-box {
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .preview-box h3 {
+      margin-bottom: 10px;
+    }
+
+    .preview-box img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      border-radius: 8px;
+      background: #f3f4f6;
+    }
+
+    .size-info {
+      margin-top: 10px;
+      color: #6b7280;
+    }
+
+    .actions {
+      display: none;
+      text-align: center;
+      margin-top: 25px;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      padding: 12px 22px;
+      border-radius: 9px;
+      font-size: 15px;
+      font-weight: bold;
+      margin: 5px;
+    }
+
+    .download-btn {
+      background: #16a34a;
+      color: white;
+    }
+
+    .reset-btn {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .result {
+      margin-top: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .info {
+      margin-top: 35px;
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      line-height: 1.7;
+    }
+
+    .info h2 {
+      margin-bottom: 10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #6b7280;
+    }
+
+    @media (max-width: 700px) {
+      .hero h1 {
+        font-size: 30px;
+      }
+
+      .preview {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        padding: 16px 5%;
+      }
+
+      nav a {
+        margin-left: 10px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a href="index.html" class="logo">BizBridge</a>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="tools.html">Tools</a>
+  </nav>
+</header>
+
+<main class="container">
+
+  <section class="hero">
+    <h1>Image Size Reducer</h1>
+    <p>
+      Compress and reduce image file size quickly without complicated software.
+      Supports JPG, PNG and WebP images.
+    </p>
+  </section>
+
+  <section class="tool-card">
+
+    <label for="fileInput" class="upload-box">
+      <h2>Upload Your Image</h2>
+      <p>Choose a JPG, PNG or WebP image</p>
+      <span class="upload-btn">Choose Image</span>
+    </label>
+
+    <input
+      type="file"
+      id="fileInput"
+      accept="image/jpeg,image/png,image/webp"
+    >
+
+    <div class="controls">
+
+      <div class="control-group">
+        <label for="quality">Compression Quality</label>
+
+        <input
+          type="range"
+          id="quality"
+          min="10"
+          max="100"
+          value="80"
+        >
+
+        <div class="range-value">
+          Quality: <span id="qualityValue">80</span>%
+        </div>
+      </div>
+
+    </div>
+
+    <div class="preview">
+
+      <div class="preview-box">
+        <h3>Original</h3>
+        <img id="originalPreview" alt="Original uploaded image">
+        <div class="size-info">
+          Size: <span id="originalSize">-</span>
+        </div>
+      </div>
+
+      <div class="preview-box">
+        <h3>Compressed</h3>
+        <img id="compressedPreview" alt="Compressed image preview">
+        <div class="size-info">
+          Size: <span id="compressedSize">-</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="result" id="result"></div>
+
+    <div class="actions">
+
+      <button
+        class="download-btn"
+        id="downloadBtn"
+      >
+        Download Compressed Image
+      </button>
+
+      <button
+        class="reset-btn"
+        id="resetBtn"
+      >
+        Reset
+      </button>
+
+    </div>
+
+  </section>
+
+  <section class="info">
+
+    <h2>About Image Size Reducer</h2>
+
+    <p>
+      BizBridge Image Size Reducer helps you make image files smaller
+      for websites, forms, email attachments, documents and everyday sharing.
+    </p>
+
+    <br>
+
+    <p>
+      Your image is processed directly in your browser.
+      The image does not need to be uploaded to a server for compression.
+    </p>
+
+  </section>
+
+</main>
+
+<footer>
+  © 2026 BizBridge. Free online tools for everyday tasks.
+</footer>
+
+<script>
+
+  const fileInput = document.getElementById("fileInput");
+  const quality = document.getElementById("quality");
+  const qualityValue = document.getElementById("qualityValue");
+
+  const originalPreview = document.getElementById("originalPreview");
+  const compressedPreview = document.getElementById("compressedPreview");
+
+  const originalSize = document.getElementById("originalSize");
+  const compressedSize = document.getElementById("compressedSize");
+
+  const controls = document.querySelector(".controls");
+  const preview = document.querySelector(".preview");
+  const actions = document.querySelector(".actions");
+
+  const downloadBtn = document.getElementById("downloadBtn");
+  const resetBtn = document.getElementById("resetBtn");
+
+  const result = document.getElementById("result");
+
+  let originalFile = null;
+  let compressedBlob = null;
+
+  function formatBytes(bytes) {
+
+    if (bytes < 1024) {
+      return bytes + " B";
+    }
+
+    if (bytes < 1024 * 1024) {
+      return (bytes / 1024).toFixed(1) + " KB";
+    }
+
+    return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+  }
+
+  fileInput.addEventListener("change", function () {
+
+    const file = this.files[0];
+
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      alert("Please select a valid image.");
+      return;
+    }
+
+    originalFile = file;
+
+    originalPreview.src = URL.createObjectURL(file);
+
+    originalSize.textContent = formatBytes(file.size);
+
+    controls.style.display = "block";
+    preview.style.display = "grid";
+    actions.style.display = "block";
+
+    compressImage();
+
+  });
+
+  quality.addEventListener("input", function () {
+
+    qualityValue.textContent = this.value;
+
+    if (originalFile) {
+      compressImage();
+    }
+
+  });
+
+  function compressImage() {
+
+    const img = new Image();
+
+    img.onload = function () {
+
+      const canvas = document.createElement("canvas");
+
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      const ctx = canvas.getContext("2d");
+
+      ctx.drawImage(
+        img,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+      let outputType = "image/jpeg";
+
+      if (originalFile.type === "image/png") {
+        outputType = "image/png";
+      }
+
+      if (originalFile.type === "image/webp") {
+        outputType = "image/webp";
+      }
+
+      canvas.toBlob(
+        function (blob) {
+
+          if (!blob) {
+            result.textContent = "Compression failed. Please try another image.";
+            return;
+          }
+
+          compressedBlob = blob;
+
+          compressedPreview.src = URL.createObjectURL(blob);
+
+          compressedSize.textContent = formatBytes(blob.size);
+
+          const reduction =
+            ((originalFile.size - blob.size) / originalFile.size) * 100;
+
+          if (reduction > 0) {
+
+            result.textContent =
+              "Size reduced by " + reduction.toFixed(1) + "%";
+
+          } else {
+
+            result.textContent =
+              "This image is already highly compressed.";
+
+          }
+
+        },
+        outputType,
+        Number(quality.value) / 100
+      );
+
+    };
+
+    img.src = URL.createObjectURL(originalFile);
+
+  }
+
+  downloadBtn.addEventListener("click", function () {
+
+    if (!compressedBlob) {
+      alert("Please upload an image first.");
+      return;
+    }
+
+    const url = URL.createObjectURL(compressedBlob);
+
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "bizbridge-compressed-image.jpg";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+
+    URL.revokeObjectURL(url);
+
+  });
+
+  resetBtn.addEventListener("click", function () {
+
+    fileInput.value = "";
+
+    originalFile = null;
+    compressedBlob = null;
+
+    originalPreview.src = "";
+    compressedPreview.src = "";
+
+    originalSize.textContent = "-";
+    compressedSize.textContent = "-";
+
+    controls.style.display = "none";
+    preview.style.display = "none";
+    actions.style.display = "none";
+
+    result.textContent = "";
+
+    quality.value = 80;
+    qualityValue.textContent = 80;
+
+  });
+
+</script>
+
+</body>
+</html>
