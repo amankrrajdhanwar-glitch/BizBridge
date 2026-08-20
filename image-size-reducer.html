@@ -1018,50 +1018,97 @@
   }
 
   async function compressCanvas(canvas, type, initialQuality, desiredBytes) {
+  if (type === "image/png" && desiredBytes) {
+    type = "image/webp";
+  }
 
-    let q = initialQuality;
+  const makeBlob = (q) => new Promise(resolve => {
+    canvas.toBlob(blob => resolve(blob), type, q);
+  });
 
-    let blob = await canvasBlob(canvas, type, q);
-
-    if (!desiredBytes || type === "image/png") {
-      return blob;
+  if (!desiredBytes) {
+    if (type === "image/png") {
+      return await makeBlob(0.92);
     }
+
+    return await makeBlob(Math.min(0.82, Math.max(0.55, initialQuality)));
+  }
+
+  let low = 0.10;
+  let high = 0.95;
+  let bestBlob = null;
+
+  for (let i = 0; i < 10; i++) {
+    const mid = (low + high) / 2;
+    const blob = await makeBlob(mid);
+
+    if (!blob) break;
 
     if (blob.size <= desiredBytes) {
-      return blob;
+      bestBlob = blob;
+      low = mid;
+    } else {
+      high = mid;
     }
-
-    let low = 0.05;
-    let high = q;
-
-    let bestBlob = blob;
-
-    for (let i = 0; i < 8; i++) {
-
-      const mid = (low + high) / 2;
-
-      const testBlob = await canvasBlob(
-        canvas,
-        type,
-        mid
-      );
-
-      if (testBlob.size <= desiredBytes) {
-
-        bestBlob = testBlob;
-        low = mid;
-
-      } else {
-
-        high = mid;
-
-      }
-
-    }
-
-    return bestBlob;
-
   }
+
+  if (!bestBlob) {
+    let smallest = null;
+
+    for (const q of [0.75, 0.60, 0.45, 0.30, 0.20]) {
+      const blob = await makeBlob(q);
+
+      if (blob && (!smallest || blob.size < smallest.size)) {
+        smallest = blob;
+      }
+    }
+
+    return smallest;
+  }
+
+  return bestBlob;
+  }
+
+    
+
+    
+
+    
+      
+    
+    
+    
+    
+
+    
+    
+
+    
+
+    
+
+      
+      
+        
+        
+        
+      
+
+      
+
+        
+        
+
+      
+
+        
+
+      
+    
+
+    
+
+  
 
   async function processFile(file) {
 
