@@ -744,94 +744,37 @@ if (!output) {
 
 console.log("AI OUTPUT:", output);
 console.log("AI OUTPUT SIZE:", output.width, output.height);   
-const outputBlob = await output.toBlob();
+const originalRaw =
+  await window.RawImage.fromURL(originalPreview.src);
+
+const mask =
+  await output.resize(
+    originalRaw.width,
+    originalRaw.height
+  );
+
+const cutout =
+  originalRaw.rgba().putAlpha(mask);
+
+const outputBlob =
+  await cutout.toBlob();
 
 if (!outputBlob) {
-  throw new Error("Could not create AI output image.");
+  throw new Error("Could not create transparent PNG.");
 }
 
 enhancedBlob = outputBlob;
 
-enhancedPreview.src = URL.createObjectURL(outputBlob);
+enhancedPreview.src =
+  URL.createObjectURL(outputBlob);
 
 enhancedInfo.textContent =
-  "AI background removal • PNG";
+  "Background removed • Transparent PNG";
 
 status.textContent =
   "✅ AI background removal completed.";
 
-
-  
-
-
-
-
-  
-
-
-
-
-
-
-
-
-  
-
-
-  
-
-    
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-    
-  
-
-  
-
-  
-  
-
-  
-    
-
-  
-    
-
-
-
-
-
-
-
-
-  
-
-
-  
-
-
-  
-
-    
-
-    status.textContent =
-      "✅ AI background removal completed.";
+      
 
   } catch (error) {
 
@@ -1651,9 +1594,13 @@ afterLayer.style.width = "50%";
 
 </script>
   <script type="module">
-  import { pipeline } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.0.1";
+  import {
+  pipeline,
+  RawImage
+} from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.0.1";
 
   window.backgroundRemovalPipeline = pipeline;
+  window.RawImage = RawImage; 
 
   window.loadBackgroundRemover = async function() {
 
