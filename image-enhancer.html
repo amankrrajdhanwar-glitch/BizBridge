@@ -1644,8 +1644,14 @@ afterLayer.style.width = "50%";
 
     window.backgroundRemover = await pipeline(
   "background-removal",
-  "Xenova/modnet"
+  "Xenova/modnet",
+  {
+    dtype: "fp32"
+  }
 );
+  
+  
+
       
     
 
