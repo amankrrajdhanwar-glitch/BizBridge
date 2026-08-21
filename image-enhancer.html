@@ -1621,8 +1621,11 @@ afterLayer.style.width = "50%";
     console.log("⏳ Loading Background Removal AI...");
 
     window.backgroundRemover = await pipeline(
-      "background-removal"
-    );
+  "background-removal",
+  "Xenova/modnet"
+);
+      
+    
 
     console.log("✅ Background Removal AI loaded");
 
