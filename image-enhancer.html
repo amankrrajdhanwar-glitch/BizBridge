@@ -730,6 +730,20 @@ comparisonSlider.addEventListener("input", function () {
     status.textContent = "✨ Removing background...";
 
     const result = await remover(originalPreview.src);
+    const output = result[0];
+
+const outputBlob = await output.toBlob("image/png");
+
+enhancedBlob = outputBlob;
+
+enhancedPreview.src =
+  URL.createObjectURL(outputBlob);
+
+enhancedInfo.textContent =
+  "Background removed • Transparent PNG";
+
+status.textContent =
+  "✅ Background removed successfully.";
 
     console.log("Background removal result:", result);
 
