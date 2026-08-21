@@ -730,28 +730,41 @@ comparisonSlider.addEventListener("input", function () {
     status.textContent = "✨ Removing background...";
 
     const result = await remover(originalPreview.src);
-    const output = result;
+    const output = result[0];
 
-const outputCanvas = output.toCanvas();
+const outputBlob = await output.toBlob();
 
-outputCanvas.toBlob(function(blob) {
+enhancedBlob = outputBlob;
 
-  if (!blob) {
-    throw new Error("Could not create transparent PNG.");
-  }
+enhancedPreview.src =
+  URL.createObjectURL(outputBlob);
 
-  enhancedBlob = blob;
+enhancedInfo.textContent =
+  "Background removed • Transparent PNG";
 
-  enhancedPreview.src =
-    URL.createObjectURL(blob);
+status.textContent =
+  "✅ Background removed successfully.";
 
-  enhancedInfo.textContent =
-    "Background removed • Transparent PNG";
 
-  status.textContent =
-    "✅ Background removed successfully.";
 
-}, "image/png");
+
+
+
+    
+  
+
+  
+
+  
+  
+
+  
+    
+
+  
+    
+
+
 
 
 
