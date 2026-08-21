@@ -1515,4 +1515,34 @@ afterLayer.style.width = "50%";
   import { pipeline } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.0.1";
 
   window.backgroundRemovalPipeline = pipeline;
+
+  window.loadBackgroundRemover = async function() {
+
+    if (window.backgroundRemover) {
+      return window.backgroundRemover;
+    }
+
+    console.log("⏳ Loading Background Removal AI...");
+
+    window.backgroundRemover = await pipeline(
+      "background-removal"
+    );
+
+    console.log("✅ Background Removal AI loaded");
+
+    return window.backgroundRemover;
+  };
   </script>
+  
+
+  
+
+  
+    
+  
+
+  
+  
+
+  
+  
