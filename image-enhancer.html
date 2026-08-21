@@ -729,7 +729,7 @@ comparisonSlider.addEventListener("input", function () {
 
     status.textContent = "✨ Removing background...";
 
-    const result = await remover(originalPreview);
+    const result = await remover(originalPreview.src);
 
     console.log("Background removal result:", result);
 
