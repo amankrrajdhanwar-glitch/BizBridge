@@ -734,15 +734,16 @@ comparisonSlider.addEventListener("input", function () {
 console.log("AI RESULT:", result);
 console.log("AI RESULT TYPE:", typeof result);
 console.log("AI RESULT LENGTH:", result?.length);
+console.log("AI RESULT KEYS:", Object.keys(result || {}));
+console.log("AI RESULT JSON:", JSON.stringify(result, null, 2));
+console.log("AI RESULT 0:", result?.[0]);    
     
-const mask = result[0];
 
-if (!mask) {
-  throw new Error("AI did not return a background mask.");
-}
 
-console.log("AI MASK:", mask);
-console.log("AI MASK SIZE:", mask.width, mask.height);
+
+  
+
+
 
 
   
