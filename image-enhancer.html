@@ -1150,6 +1150,21 @@ fileInput.addEventListener("change", function(event) {
   });
 
 
+  // Enhance All Photos
+enhanceAllBtn.addEventListener("click", async function() {
+
+  if (selectedFiles.length === 0) {
+    alert("Please select multiple photos first.");
+    return;
+  }
+
+  status.textContent =
+    "✨ Enhance All Photos feature is ready to process " +
+    selectedFiles.length +
+    " photos.";
+
+});
+  
   // Download
   downloadBtn.addEventListener("click", function() {
 
