@@ -1345,6 +1345,78 @@ enhanceAllBtn.addEventListener("click", async function() {
 
   });
 
+  // Download All Enhanced Photos
+downloadAllBtn.addEventListener("click", async function() {
+
+  const results = window.enhancedResults || [];
+
+  if (results.length === 0) {
+    alert("Please enhance all photos first.");
+    return;
+  }
+
+  downloadAllBtn.disabled = true;
+
+  status.textContent =
+    "⬇️ Preparing " + results.length + " enhanced photos...";
+
+  try {
+
+    for (let i = 0; i < results.length; i++) {
+
+      const result = results[i];
+
+      const extension =
+        format.value === "image/png"
+          ? "png"
+          : format.value === "image/jpeg"
+          ? "jpg"
+          : "webp";
+
+      const link = document.createElement("a");
+
+      link.href = URL.createObjectURL(result.blob);
+
+      link.download =
+        "bizbridge-enhanced-" +
+        (i + 1) +
+        "." +
+        extension;
+
+      document.body.appendChild(link);
+
+      link.click();
+
+      document.body.removeChild(link);
+
+      await new Promise(resolve =>
+        setTimeout(resolve, 300)
+      );
+
+    }
+
+    status.textContent =
+      "✅ All " +
+      results.length +
+      " enhanced photos downloaded.";
+
+  }
+
+  catch (error) {
+
+    status.textContent =
+      "⚠️ " + error.message;
+
+  }
+
+  finally {
+
+    downloadAllBtn.disabled = false;
+
+  }
+
+});
+
 
   // Reset
   resetBtn.addEventListener("click", function() {
