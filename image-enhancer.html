@@ -1240,7 +1240,7 @@ fileInput.addEventListener("change", function(event) {
   }
 
 
-  // Enhance All Photos
+ // Enhance All Photos
 enhanceAllBtn.addEventListener("click", async function() {
 
   if (selectedFiles.length === 0) {
@@ -1248,12 +1248,66 @@ enhanceAllBtn.addEventListener("click", async function() {
     return;
   }
 
-  status.textContent =
-    "✨ Enhance All Photos feature is ready to process " +
-    selectedFiles.length +
-    " photos.";
+  enhanceAllBtn.disabled = true;
+  enhanceBtn.disabled = true;
 
-});
+  try {
+
+    const results = [];
+
+    for (let i = 0; i < selectedFiles.length; i++) {
+
+      status.textContent =
+        "✨ Enhancing photo " +
+        (i + 1) +
+        " of " +
+        selectedFiles.length +
+        "...";
+
+      const result =
+        await enhanceSingleImage(selectedFiles[i]);
+
+      results.push(result);
+
+    }
+
+    status.textContent =
+      "✅ All " +
+      results.length +
+      " photos enhanced successfully.";
+
+    window.enhancedResults = results;
+
+  }
+
+  catch (error) {
+
+    status.textContent =
+      "⚠️ " + error.message;
+
+  }
+
+  finally {
+
+    enhanceAllBtn.disabled = false;
+    enhanceBtn.disabled = false;
+
+  }
+
+}); 
+
+
+  
+    
+    
+  
+
+  
+     
+    
+    
+
+
   
   // Download
   downloadBtn.addEventListener("click", function() {
