@@ -726,6 +726,21 @@ comparisonSlider.addEventListener("input", function () {
   const format = document.getElementById("format");
   const quality = document.getElementById("quality");
   const qualityValue = document.getElementById("qualityValue");
+  const backgroundMode =
+  document.getElementById("backgroundMode");
+
+const backgroundColor =
+  document.getElementById("backgroundColor");
+
+backgroundMode.addEventListener("change", function() {
+
+  if (this.value === "custom") {
+    backgroundColor.style.display = "block";
+  } else {
+    backgroundColor.style.display = "none";
+  }
+
+});
 
   const status = document.getElementById("status");
 
