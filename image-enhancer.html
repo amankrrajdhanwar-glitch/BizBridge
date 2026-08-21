@@ -744,23 +744,11 @@ if (!output) {
 
 console.log("AI OUTPUT:", output);
 console.log("AI OUTPUT SIZE:", output.width, output.height);   
-const originalRaw =
-  await window.RawImage.fromURL(originalPreview.src);
-
-const mask =
-  await output.resize(
-    originalRaw.width,
-    originalRaw.height
-  );
-
-const cutout =
-  originalRaw.rgba().putAlpha(mask);
-
 const outputBlob =
-  await cutout.toBlob();
+  await output.toBlob();
 
 if (!outputBlob) {
-  throw new Error("Could not create transparent PNG.");
+  throw new Error("Could not create AI output PNG.");
 }
 
 enhancedBlob = outputBlob;
@@ -773,7 +761,6 @@ enhancedInfo.textContent =
 
 status.textContent =
   "✅ AI background removal completed.";
-
       
 
   } catch (error) {
