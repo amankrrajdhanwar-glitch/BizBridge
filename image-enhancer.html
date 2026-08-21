@@ -735,7 +735,23 @@ console.log("AI RESULT:", result);
 console.log("AI RESULT TYPE:", typeof result);
 console.log("AI RESULT LENGTH:", result?.length);
     
+const output = result[0];
 
+if (!output) {
+  throw new Error("AI did not return an image mask.");
+}
+
+const outputBlob = await output.toBlob();
+
+enhancedBlob = outputBlob;
+
+enhancedPreview.src = URL.createObjectURL(outputBlob);
+
+enhancedInfo.textContent =
+  "AI background mask generated • PNG";
+
+status.textContent =
+  "✅ AI background mask generated.";
 
     
 
