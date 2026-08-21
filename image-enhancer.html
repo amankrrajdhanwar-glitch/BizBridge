@@ -1511,3 +1511,8 @@ afterLayer.style.width = "50%";
 }
 
 </script>
+  <script type="module">
+  import { pipeline } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.0.1";
+
+  window.backgroundRemovalPipeline = pipeline;
+  </script>
