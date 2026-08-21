@@ -730,6 +730,9 @@ comparisonSlider.addEventListener("input", function () {
     status.textContent = "✨ Removing background...";
 
     const result = await remover(originalPreview.src);
+    console.log("AI RESULT:", result);
+console.log("AI RESULT TYPE:", typeof result);
+console.log("AI RESULT LENGTH:", result?.length);
     const output = result[0];
 
 const outputBlob = await output.toBlob();
