@@ -729,6 +729,9 @@ comparisonSlider.addEventListener("input", function () {
 fileInput.addEventListener("change", function(event) {
 
   const files = Array.from(event.target.files);
+  selectedFiles = files.filter(file =>
+  ["image/jpeg", "image/png", "image/webp"].includes(file.type)
+);
 
   const multiplePreview =
     document.getElementById("multiplePreview");
