@@ -551,6 +551,23 @@ button {
     <option value="strong">Strong</option>
   </select>
 </div>
+      <div class="setting">
+  <label for="textRemoval">🧹 Remove Unwanted Text</label>
+
+  <select id="textRemoval">
+    <option value="none">None</option>
+    <option value="light">Light</option>
+    <option value="medium">Medium</option>
+    <option value="strong">Strong</option>
+  </select>
+      </div>
+      <button
+  type="button"
+  id="selectRemovalAreaBtn"
+  class="secondary"
+>
+  🎯 Select Text Area
+      </button>
 
       <div class="setting">
         <label>
@@ -601,20 +618,11 @@ button {
 
     <div class="preview-grid">
       
-  
-  
-  
-  
-
-
-
-  
-  
-  
-  
-  
-
-
+    <canvas
+  id="removalCanvas"
+  style="display:none; width:100%; max-width:100%; border-radius:12px; cursor:crosshair;"
+></canvas>  
+ 
       <div class="preview-box comparison-box">
 
   <h3>Before / After</h3>
@@ -1095,6 +1103,156 @@ const backgroundColor =
   document.getElementById("backgroundColor");
   const edgeCleanup =
   document.getElementById("edgeCleanup");
+  const textRemoval =
+  document.getElementById("textRemoval");
+  const selectRemovalAreaBtn =
+  document.getElementById("selectRemovalAreaBtn");
+
+selectRemovalAreaBtn.addEventListener("click", function() {
+
+  if (!selectedFile) {
+    alert("Please upload an image first.");
+    return;
+  }
+
+  removalCanvas.style.display = "block";
+
+  removalCanvas.width = originalPreview.naturalWidth;
+  removalCanvas.height = originalPreview.naturalHeight;
+
+  removalCtx.clearRect(
+    0,
+    0,
+    removalCanvas.width,
+    removalCanvas.height
+  );
+
+  removalCtx.drawImage(
+    originalPreview,
+    0,
+    0,
+    removalCanvas.width,
+    removalCanvas.height
+  );
+
+  status.textContent =
+    "🎯 Drag over the unwanted text area.";
+
+});
+
+  let isSelectingRemovalArea = false;
+let selectionStartX = 0;
+let selectionStartY = 0;
+
+removalCanvas.addEventListener("pointerdown", function(event) {
+
+  isSelectingRemovalArea = true;
+
+  const rect = removalCanvas.getBoundingClientRect();
+
+  selectionStartX =
+    (event.clientX - rect.left) *
+    (removalCanvas.width / rect.width);
+
+  selectionStartY =
+    (event.clientY - rect.top) *
+    (removalCanvas.height / rect.height);
+
+});
+
+removalCanvas.addEventListener("pointermove", function(event) {
+
+  if (!isSelectingRemovalArea) return;
+
+  const rect = removalCanvas.getBoundingClientRect();
+
+  const currentX =
+    (event.clientX - rect.left) *
+    (removalCanvas.width / rect.width);
+
+  const currentY =
+    (event.clientY - rect.top) *
+    (removalCanvas.height / rect.height);
+
+  const x = Math.min(selectionStartX, currentX);
+  const y = Math.min(selectionStartY, currentY);
+
+  const width =
+    Math.abs(currentX - selectionStartX);
+
+  const height =
+    Math.abs(currentY - selectionStartY);
+
+  removalCtx.clearRect(
+    0,
+    0,
+    removalCanvas.width,
+    removalCanvas.height
+  );
+
+  removalCtx.drawImage(
+    originalPreview,
+    0,
+    0,
+    removalCanvas.width,
+    removalCanvas.height
+  );
+
+  removalCtx.strokeStyle = "#00aaff";
+  removalCtx.lineWidth = 4;
+  removalCtx.strokeRect(x, y, width, height);
+
+});
+
+removalCanvas.addEventListener("pointerup", function(event) {
+
+  if (!isSelectingRemovalArea) return;
+
+  isSelectingRemovalArea = false;
+
+  const rect = removalCanvas.getBoundingClientRect();
+
+  const endX =
+    (event.clientX - rect.left) *
+    (removalCanvas.width / rect.width);
+
+  const endY =
+    (event.clientY - rect.top) *
+    (removalCanvas.height / rect.height);
+
+  removalArea = {
+    x: Math.min(selectionStartX, endX),
+    y: Math.min(selectionStartY, endY),
+    width: Math.abs(endX - selectionStartX),
+    height: Math.abs(endY - selectionStartY)
+  };
+
+  removalAreaSelected =
+    removalArea.width > 5 &&
+    removalArea.height > 5;
+
+  if (removalAreaSelected) {
+
+    status.textContent =
+      "✅ Text area selected.";
+
+  } else {
+
+    status.textContent =
+      "⚠️ Please select a larger area.";
+
+  }
+
+});
+
+
+  let removalAreaSelected = false;
+let removalArea = null;
+  const removalCanvas =
+  document.getElementById("removalCanvas");
+
+const removalCtx =
+  removalCanvas.getContext("2d");
   edgeCleanup.addEventListener("change", function() {
 
   if (!backgroundRemovedBlob) {
