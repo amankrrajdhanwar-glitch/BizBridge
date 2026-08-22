@@ -980,6 +980,9 @@ backgroundImageInput.addEventListener("change", function(event) {
 
     img.onload = function() {
       replacementBackgroundImage = img;
+      if (backgroundMode.value === "replace") {
+  applyBackgroundReplacement();
+      }
       status.textContent = "✅ New background image selected.";
     };
 
