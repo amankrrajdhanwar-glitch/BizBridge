@@ -804,13 +804,17 @@ status.textContent =
 
     let color = "#ffffff";
 
-    if (mode === "black") {
-      color = "#000000";
-    }
+if (mode === "white") {
+  color = "#ffffff";
+}
 
-    if (mode === "custom") {
-      color = backgroundColor.value;
-    }
+if (mode === "black") {
+  color = "#000000";
+}
+
+if (mode === "custom") {
+  color = backgroundColor.value;
+}
 
     ctx.fillStyle = color;
 
