@@ -541,7 +541,16 @@ button {
   style="display:none;"
 >
       </div>
+<div class="setting">
+  <label for="edgeCleanup">🧹 Edge Cleanup</label>
 
+  <select id="edgeCleanup">
+    <option value="none">None</option>
+    <option value="light">Light</option>
+    <option value="medium">Medium</option>
+    <option value="strong">Strong</option>
+  </select>
+</div>
 
       <div class="setting">
         <label>
@@ -930,6 +939,135 @@ if (mode === "custom") {
     URL.createObjectURL(backgroundRemovedBlob);
 
   }
+
+  function applyEdgeCleanup() {
+
+  if (!backgroundRemovedBlob) {
+    alert("Please remove the background first.");
+    return;
+  }
+
+  const strength = edgeCleanup.value;
+
+  if (strength === "none") {
+    enhancedBlob = backgroundRemovedBlob;
+    enhancedPreview.src =
+      URL.createObjectURL(backgroundRemovedBlob);
+
+    status.textContent =
+      "✅ Edge Cleanup: None.";
+
+    return;
+  }
+
+  const img = new Image();
+
+  img.onload = function () {
+
+    const canvas = document.createElement("canvas");
+
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+
+    const ctx = canvas.getContext("2d");
+
+    ctx.clearRect(
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+    /*
+      Edge cleanup uses the existing transparent
+      background-removal result and slightly
+      trims semi-transparent edge pixels.
+    */
+
+    const alphaMap = document.createElement("canvas");
+
+    alphaMap.width = canvas.width;
+    alphaMap.height = canvas.height;
+
+    const alphaCtx = alphaMap.getContext("2d");
+
+    alphaCtx.drawImage(
+      img,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+    const imageData = alphaCtx.getImageData(
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+    const data = imageData.data;
+
+    let threshold = 0;
+
+    if (strength === "light") {
+      threshold = 25;
+    }
+
+    if (strength === "medium") {
+      threshold = 50;
+    }
+
+    if (strength === "strong") {
+      threshold = 80;
+    }
+
+    for (let i = 3; i < data.length; i += 4) {
+
+      if (data[i] < threshold) {
+        data[i] = 0;
+      }
+
+    }
+
+    alphaCtx.putImageData(
+      imageData,
+      0,
+      0
+    );
+
+    ctx.drawImage(
+      alphaMap,
+      0,
+      0
+    );
+
+    canvas.toBlob(function (blob) {
+
+      if (!blob) {
+        alert("Could not apply edge cleanup.");
+        return;
+      }
+
+      enhancedBlob = blob;
+
+      enhancedPreview.src =
+        URL.createObjectURL(blob);
+
+      enhancedInfo.textContent =
+        "Edge Cleanup: " + strength;
+
+      status.textContent =
+        "✅ Edge Cleanup applied: " + strength;
+
+    }, "image/png");
+
+  };
+
+  img.src =
+    URL.createObjectURL(backgroundRemovedBlob);
+
+  }
   const enhanceAllBtn = document.getElementById("enhanceAllBtn");
   const downloadBtn = document.getElementById("downloadBtn");
   const downloadAllBtn = document.getElementById("downloadAllBtn");
@@ -955,6 +1093,18 @@ if (mode === "custom") {
 
 const backgroundColor =
   document.getElementById("backgroundColor");
+  const edgeCleanup =
+  document.getElementById("edgeCleanup");
+  edgeCleanup.addEventListener("change", function() {
+
+  if (!backgroundRemovedBlob) {
+    alert("Please remove the background first.");
+    return;
+  }
+
+  applyEdgeCleanup();
+
+});
   const backgroundImageInput =
   document.getElementById("backgroundImageInput");
   let replacementBackgroundImage = null;
