@@ -752,6 +752,7 @@ if (!outputBlob) {
 }
 
 enhancedBlob = outputBlob;
+backgroundRemovedBlob = outputBlob;   
 
 enhancedPreview.src =
   URL.createObjectURL(outputBlob);
@@ -855,7 +856,7 @@ if (mode === "custom") {
 
   };
 
-  img.src = URL.createObjectURL(enhancedBlob);
+  img.src = URL.createObjectURL(backgroundRemovedBlob);
   }
   const enhanceAllBtn = document.getElementById("enhanceAllBtn");
   const downloadBtn = document.getElementById("downloadBtn");
@@ -909,6 +910,7 @@ backgroundMode.addEventListener("change", function() {
   let selectedFile = null;
   let originalImage = null;
   let enhancedBlob = null;
+  let backgroundRemovedBlob = null;
   let selectedFiles = [];
 
 
