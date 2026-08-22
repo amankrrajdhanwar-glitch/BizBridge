@@ -525,6 +525,7 @@ button {
     <option value="white">White</option>
     <option value="black">Black</option>
     <option value="custom">Custom Color</option>
+    <option value="replace">Replace with Image</option>
   </select>
 
   <input
@@ -533,6 +534,12 @@ button {
     value="#ffffff"
     style="display:none;"
   >
+        <input
+  type="file"
+  id="backgroundImageInput"
+  accept="image/jpeg,image/png,image/webp"
+  style="display:none;"
+>
       </div>
 
 
@@ -858,6 +865,71 @@ if (mode === "custom") {
 
   img.src = URL.createObjectURL(backgroundRemovedBlob);
   }
+  function applyBackgroundReplacement() {
+
+  if (!backgroundRemovedBlob) {
+    alert("Please remove the background first.");
+    return;
+  }
+
+  if (!replacementBackgroundImage) {
+    alert("Please choose a replacement background image.");
+    return;
+  }
+
+  const subjectImg = new Image();
+
+  subjectImg.onload = function () {
+
+    const canvas = document.createElement("canvas");
+
+    canvas.width = subjectImg.naturalWidth;
+    canvas.height = subjectImg.naturalHeight;
+
+    const ctx = canvas.getContext("2d");
+
+    ctx.drawImage(
+      replacementBackgroundImage,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+    ctx.drawImage(
+      subjectImg,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+    canvas.toBlob(function (blob) {
+
+      if (!blob) {
+        alert("Could not create replacement background image.");
+        return;
+      }
+
+      enhancedBlob = blob;
+
+      enhancedPreview.src =
+        URL.createObjectURL(blob);
+
+      enhancedInfo.textContent =
+        "Background replaced successfully.";
+
+      status.textContent =
+        "✅ Background replaced successfully.";
+
+    }, "image/png");
+
+  };
+
+  subjectImg.src =
+    URL.createObjectURL(backgroundRemovedBlob);
+
+  }
   const enhanceAllBtn = document.getElementById("enhanceAllBtn");
   const downloadBtn = document.getElementById("downloadBtn");
   const downloadAllBtn = document.getElementById("downloadAllBtn");
@@ -883,9 +955,49 @@ if (mode === "custom") {
 
 const backgroundColor =
   document.getElementById("backgroundColor");
+  const backgroundImageInput =
+  document.getElementById("backgroundImageInput");
+  let replacementBackgroundImage = null;
+
+backgroundImageInput.addEventListener("change", function(event) {
+
+  const file = event.target.files[0];
+
+  if (!file) {
+    return;
+  }
+
+  if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+    alert("Please choose a JPG, PNG, or WebP background image.");
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(e) {
+
+    const img = new Image();
+
+    img.onload = function() {
+      replacementBackgroundImage = img;
+      status.textContent = "✅ New background image selected.";
+    };
+
+    img.src = e.target.result;
+
+  };
+
+  reader.readAsDataURL(file);
+
+});
 
 backgroundMode.addEventListener("change", function() {
 
+  if (this.value === "replace") {
+  backgroundImageInput.style.display = "block";
+} else {
+  backgroundImageInput.style.display = "none";
+  }
   if (this.value === "custom") {
     backgroundColor.style.display = "block";
   } else {
@@ -893,12 +1005,19 @@ backgroundMode.addEventListener("change", function() {
   }
 
   if (
-    this.value === "white" ||
-    this.value === "black" ||
-    this.value === "custom"
-  ) {
-    applyBackgroundColor();
+  this.value === "white" ||
+  this.value === "black" ||
+  this.value === "custom"
+) {
+  applyBackgroundColor();
+}
+
+if (this.value === "replace") {
+  if (replacementBackgroundImage) {
+    applyBackgroundReplacement();
   }
+}
+  
 
 });
   backgroundColor.addEventListener("input", function() {
