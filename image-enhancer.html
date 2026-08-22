@@ -901,6 +901,15 @@ backgroundMode.addEventListener("change", function() {
   }
 
 });
+  backgroundColor.addEventListener("input", function() {
+
+  if (backgroundMode.value === "custom") {
+    applyBackgroundColor();
+  }
+
+});
+
+  
   
 
 
