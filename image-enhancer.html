@@ -527,6 +527,33 @@ button {
     <option value="strong">Strong</option>
   </select>
 </div>
+      <div class="setting">
+  <label for="watermarkText">💧 Watermark</label>
+
+  <input
+    type="text"
+    id="watermarkText"
+    value="BizBridge"
+    maxlength="50"
+    placeholder="Enter watermark text"
+    style="width:100%; padding:10px; border:1px solid #cbd5e1; border-radius:8px;"
+  >
+
+  <select id="watermarkSize" style="margin-top:8px;">
+    <option value="small">Small</option>
+    <option value="medium" selected>Medium</option>
+    <option value="strong">Strong</option>
+  </select>
+
+  <button
+    type="button"
+    id="applyWatermarkBtn"
+    class="success"
+    style="margin-top:8px;"
+  >
+    💧 Apply Watermark
+  </button>
+      </div>
 
       <div class="setting">
         <label>
@@ -1057,6 +1084,176 @@ const backgroundColor =
   document.getElementById("backgroundColor");
   const edgeCleanup =
   document.getElementById("edgeCleanup");
+  const watermarkText =
+  document.getElementById("watermarkText");
+
+const watermarkSize =
+  document.getElementById("watermarkSize");
+
+const applyWatermarkBtn =
+  document.getElementById("applyWatermarkBtn");
+
+async function applyWatermarkToBlob(blob) {
+
+  if (!blob) {
+    throw new Error("Please enhance an image first.");
+  }
+
+  const text = watermarkText.value.trim();
+
+  if (!text) {
+    throw new Error("Please enter watermark text.");
+  }
+
+  const img = new Image();
+  const imageURL = URL.createObjectURL(blob);
+
+  return new Promise((resolve, reject) => {
+
+    img.onload = function() {
+
+      URL.revokeObjectURL(imageURL);
+
+      const canvas = document.createElement("canvas");
+
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+
+      const ctx = canvas.getContext("2d");
+
+      ctx.drawImage(
+        img,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+      let fontSize;
+
+      if (watermarkSize.value === "small") {
+        fontSize = Math.max(
+          18,
+          Math.round(canvas.width * 0.025)
+        );
+      }
+
+      if (watermarkSize.value === "medium") {
+        fontSize = Math.max(
+          26,
+          Math.round(canvas.width * 0.04)
+        );
+      }
+
+      if (watermarkSize.value === "strong") {
+        fontSize = Math.max(
+          36,
+          Math.round(canvas.width * 0.055)
+        );
+      }
+
+      const padding = Math.max(
+        20,
+        Math.round(canvas.width * 0.025)
+      );
+
+      ctx.font = "bold " + fontSize + "px Arial";
+      ctx.textAlign = "right";
+      ctx.textBaseline = "bottom";
+
+      ctx.lineWidth = Math.max(
+        3,
+        Math.round(fontSize * 0.12)
+      );
+
+      ctx.strokeStyle = "rgba(0,0,0,0.65)";
+      ctx.fillStyle = "rgba(255,255,255,0.88)";
+
+      const x = canvas.width - padding;
+      const y = canvas.height - padding;
+
+      ctx.strokeText(text, x, y);
+      ctx.fillText(text, x, y);
+
+      canvas.toBlob(
+        function(watermarkedBlob) {
+
+          if (!watermarkedBlob) {
+            reject(
+              new Error(
+                "Could not create watermarked image."
+              )
+            );
+            return;
+          }
+
+          resolve(watermarkedBlob);
+
+        },
+        format.value,
+        Number(quality.value) / 100
+      );
+
+    };
+
+    img.onerror = function() {
+      URL.revokeObjectURL(imageURL);
+
+      reject(
+        new Error(
+          "Could not load image for watermark."
+        )
+      );
+    };
+
+    img.src = imageURL;
+
+  });
+
+}
+
+applyWatermarkBtn.addEventListener(
+  "click",
+  async function() {
+
+    if (!enhancedBlob) {
+      alert("Please enhance an image first.");
+      return;
+    }
+
+    applyWatermarkBtn.disabled = true;
+
+    status.textContent =
+      "💧 Applying watermark...";
+
+    try {
+
+      enhancedBlob =
+        await applyWatermarkToBlob(enhancedBlob);
+
+      enhancedPreview.src =
+        URL.createObjectURL(enhancedBlob);
+
+      enhancedInfo.textContent =
+        "Watermark applied • " +
+        formatBytes(enhancedBlob.size);
+
+      status.textContent =
+        "✅ Watermark applied successfully.";
+
+    } catch (error) {
+
+      status.textContent =
+        "⚠️ " + error.message;
+
+    } finally {
+
+      applyWatermarkBtn.disabled = false;
+
+    }
+
+  }
+);
   
   edgeCleanup.addEventListener("change", function() {
 
